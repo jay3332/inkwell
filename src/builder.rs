@@ -2041,7 +2041,7 @@ impl<'ctx> Builder<'ctx> {
 
         let val = unsafe { LLVMBuildIsNull(self.builder, ptr.as_value_ref(), c_string.as_ptr()) };
 
-        <<T::BaseType as PointerMathType>::PtrConvType as IntMathType>::ValueType::new(val)
+        <<T::BaseType as PointerMathType>::PtrConvType as IntMathType<'ctx>>::ValueType::new(val)
     }
 
     // SubType: <P>(&self, ptr: &PointerValue<P>, name) -> IntValue<bool> {
