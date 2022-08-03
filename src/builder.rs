@@ -1195,7 +1195,7 @@ impl<'ctx> Builder<'ctx> {
             )
         };
 
-        <<T::BaseType as FloatMathType>::MathConvType as IntMathType>::ValueType::new(value)
+        <<T::BaseType as FloatMathType>::MathConvType as IntMathType<'ctx>>::ValueType::new(value)
     }
 
     pub fn build_float_to_signed_int<T: FloatMathValue<'ctx>>(
@@ -1215,7 +1215,7 @@ impl<'ctx> Builder<'ctx> {
             )
         };
 
-        <<T::BaseType as FloatMathType>::MathConvType as IntMathType>::ValueType::new(value)
+        <<T::BaseType as FloatMathType>::MathConvType as IntMathType<'ctx>>::ValueType::new(value)
     }
 
     // REVIEW: Consolidate these two casts into one via subtypes
@@ -1236,7 +1236,7 @@ impl<'ctx> Builder<'ctx> {
             )
         };
 
-        <<T::BaseType as IntMathType>::MathConvType as FloatMathType>::ValueType::new(value)
+        <<T::BaseType as IntMathType>::MathConvType as FloatMathType<'ctx>>::ValueType::new(value)
     }
 
     pub fn build_signed_int_to_float<T: IntMathValue<'ctx>>(
@@ -1256,7 +1256,7 @@ impl<'ctx> Builder<'ctx> {
             )
         };
 
-        <<T::BaseType as IntMathType>::MathConvType as FloatMathType>::ValueType::new(value)
+        <<T::BaseType as IntMathType>::MathConvType as FloatMathType<'ctx>>::ValueType::new(value)
     }
 
     pub fn build_float_trunc<T: FloatMathValue<'ctx>>(&self, float: T, float_type: T::BaseType, name: &str) -> T {
@@ -1693,7 +1693,7 @@ impl<'ctx> Builder<'ctx> {
             )
         };
 
-        <<T::BaseType as FloatMathType>::MathConvType as IntMathType>::ValueType::new(value)
+        <<T::BaseType as FloatMathType>::MathConvType as IntMathType<'ctx>>::ValueType::new(value)
     }
 
     pub fn build_unconditional_branch(&self, destination_block: BasicBlock<'ctx>) -> InstructionValue<'ctx> {
@@ -2054,7 +2054,7 @@ impl<'ctx> Builder<'ctx> {
 
         let val = unsafe { LLVMBuildIsNotNull(self.builder, ptr.as_value_ref(), c_string.as_ptr()) };
 
-        <<T::BaseType as PointerMathType>::PtrConvType as IntMathType>::ValueType::new(val)
+        <<T::BaseType as PointerMathType>::PtrConvType as IntMathType<'ctx>>::ValueType::new(val)
     }
 
     // SubType: <I, P>(&self, int: &IntValue<I>, ptr_type: &PointerType<P>, name) -> PointerValue<P> {
@@ -2075,7 +2075,7 @@ impl<'ctx> Builder<'ctx> {
             )
         };
 
-        <<T::BaseType as IntMathType>::PtrConvType as PointerMathType>::ValueType::new(value)
+        <<T::BaseType as IntMathType>::PtrConvType as PointerMathType<'ctx>>::ValueType::new(value)
     }
 
     // SubType: <I, P>(&self, ptr: &PointerValue<P>, int_type: &IntType<I>, name) -> IntValue<I> {
@@ -2096,7 +2096,7 @@ impl<'ctx> Builder<'ctx> {
             )
         };
 
-        <<T::BaseType as PointerMathType>::PtrConvType as IntMathType>::ValueType::new(value)
+        <<T::BaseType as PointerMathType>::PtrConvType as IntMathType<'ctx>>::ValueType::new(value)
     }
 
     pub fn clear_insertion_position(&self) {
